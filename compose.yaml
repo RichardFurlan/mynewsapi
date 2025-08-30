@@ -1,0 +1,7 @@
+﻿services:
+  mynewsapi:
+    image: mynewsapi
+    build:
+      context: .
+      dockerfile: MyNewsApi/Dockerfile
+

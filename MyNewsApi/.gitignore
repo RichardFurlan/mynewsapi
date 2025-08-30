@@ -1,0 +1,10 @@
+﻿bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.idea/
+.vscode/
+.env
+*.db
