@@ -22,7 +22,7 @@ public class NewsService
         _client = new NewsApiClient(apiKey);
     }
 
-    public async Task<List<News>> GetNewsAsync(string keyword, CancellationToken ct = default)
+    public async Task<List<News>> GetNewsAsync(string keyword, int userId, CancellationToken ct = default)
     {
         var response = await Task.Run(() =>
             _client.GetEverything(new EverythingRequest
@@ -60,8 +60,8 @@ public class NewsService
                 article.PublishedAt ?? DateTime.UtcNow,
                 article.Source?.Name ?? string.Empty,
                 article.Source?.Id ?? string.Empty,
-                nameof(Languages.EN)
-
+                nameof(Languages.EN),
+                userId
             );
             
             entity.SetKeywords(ExtractKeywords($"{entity.Title} {entity.Description} {entity.Content}"));

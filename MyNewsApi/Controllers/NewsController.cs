@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyNewsApi.Data;
 using MyNewsApi.Models;
@@ -18,11 +20,21 @@ public class NewsController : ControllerBase
         _db = db;
     }
     
+    [Authorize]
     [HttpGet("{keyword}")]
     [ProducesResponseType(typeof(News), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(News), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(News), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetNews(string keyword)
     {
-        var articles = await _service.GetNewsAsync(keyword);
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var userId))
+            return Unauthorized();
+        var articles = await _service.GetNewsAsync(keyword, userId);
+        
+        if(!articles.Any())
+            return NotFound();
+        
         return Ok(articles);
     }
     
