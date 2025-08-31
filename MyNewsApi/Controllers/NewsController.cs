@@ -9,6 +9,7 @@ using MyNewsApi.Services;
 namespace MyNewsApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class NewsController : ControllerBase
 {
     private readonly NewsService _service;

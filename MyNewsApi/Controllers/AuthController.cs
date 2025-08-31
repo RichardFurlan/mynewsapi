@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyNewsApi.Models;
 
@@ -15,12 +16,17 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto, CancellationToken ct)
     {
+        var emailAttr = new EmailAddressAttribute();
+        if (!emailAttr.IsValid(dto.Email))
+            return BadRequest(new { error = "Email inválido" });
+        if(dto.Password.Length < 6)
+            return BadRequest(new { error = "A senha deve ter no mínimo 6 caracteres" });
         var result = await _auth.RegisterAsync(dto, ct);
         if (result == null)
         {
             return Conflict(new { message = "Email already in use or invalid data" });
         }
-        return Ok(result);
+        return CreatedAtAction(nameof(Me), new { id = result.Id }, new UserResponseDto(result.Id, result.Email));
     }
     
     [HttpPost("login")]

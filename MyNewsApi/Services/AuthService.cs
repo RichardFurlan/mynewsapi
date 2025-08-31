@@ -105,6 +105,7 @@ public class AuthService : IAuthService
         var token = new JwtSecurityToken(
             issuer: issuer, 
             audience: audience, 
+            claims: claims,
             expires: expiresHours, 
             signingCredentials: credentials
         );
