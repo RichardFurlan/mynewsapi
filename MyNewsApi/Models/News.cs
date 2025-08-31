@@ -12,7 +12,7 @@ public class News : BaseEntity
         string sourceId,
         string sourceName,
         string language,
-        int userId
+        int? userId
         )
     {
         Title = title;
@@ -41,7 +41,7 @@ public class News : BaseEntity
     public string Language { get; private set; }
     public string Keyword { get; private set; }
 
-    public int UserId { get; private set; }
+    public int? UserId { get; private set; }
     public User User { get; private set; }
 
     public void SetKeywords(string content)

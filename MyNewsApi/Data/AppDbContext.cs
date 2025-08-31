@@ -21,7 +21,7 @@ public class AppDbContext : DbContext
             .HasOne(a => a.User)
             .WithMany(u => u.News)
             .HasForeignKey(a => a.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.SetNull);
         
         base.OnModelCreating(modelBuilder);
     }
