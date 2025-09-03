@@ -8,3 +8,8 @@ obj/
 .vscode/
 .env
 *.db
+
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+
