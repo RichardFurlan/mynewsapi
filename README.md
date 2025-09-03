@@ -27,7 +27,7 @@
 * `MyNewsApi.Application` — Serviços, DTOs, interfaces, regras de negócio
 * `MyNewsApi.Domain` — Entidades e enums de domínio
 * `MyNewsApi.Infra` — DbContext, clients (NewsApi wrapper), módulo de dependências
-* `tests/MyNewsApi.UnitTests` — Testes unitários
+* `MyNewsApi.UnitTests` — Testes unitários
 
 ---
 
