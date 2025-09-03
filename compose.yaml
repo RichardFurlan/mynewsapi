@@ -17,3 +17,9 @@
       - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata:
+  domain:
+    image: domain
+    build:
+      context: .
+      dockerfile: Domain/Dockerfile
+
