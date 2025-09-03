@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		compose.yaml = compose.yaml
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNewsApi.Domain", "MyNewsApi.Domain\MyNewsApi.Domain.csproj", "{97F8B64A-9083-4F30-9A58-17C339FE426D}"
@@ -15,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNewsApi.Application", "My
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNewsApi.Infra", "MyNewsApi.Infra\MyNewsApi.Infra.csproj", "{7F325BF6-F074-4EE8-8661-C13FB8FB6D7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{26A8DB46-234D-4C3D-B5CC-80F69DFF91E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNewsApi.UnitTests", "MyNewsApi.UnitTests\MyNewsApi.UnitTests.csproj", "{26A8DB46-234D-4C3D-B5CC-80F69DFF91E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
