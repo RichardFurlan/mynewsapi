@@ -89,14 +89,38 @@ public class AuthService : IAuthService
     #endregion
 
     #region GetUserAsync
-    public async Task<ResultViewModel<User?>> GetUserAsync(int? userId, CancellationToken ct = default)
+    public async Task<ResultViewModel<UserDto?>> GetUserAsync(int? userId, CancellationToken ct = default)
     {
-        if (userId == null) return ResultViewModel<User?>.Error("Usuário não autenticado");
-        var user = await _db.Users.Where(u => u.Id == userId).FirstOrDefaultAsync(ct);
+        if (userId == null) return ResultViewModel<UserDto?>.Error("Usuário não autenticado");
+        var user = await _db.Users
+            .Include(u => u.News) // garante que os dados relacionados venham
+            .SingleOrDefaultAsync(u => u.Id == userId, ct);
+        
         if (user == null)
-            return ResultViewModel<User?>.Error("Usuário não encontrado");
+            return ResultViewModel<UserDto?>.Error("Usuário não encontrado");
 
-        return ResultViewModel<User?>.Success(user);
+        var newsDto = user.News.Select(
+            n => new NewsDto(
+                n.Id,
+                n.Title,
+                n.Description,
+                n.Content,
+                n.Url,
+                n.UrlToImage,
+                n.PublishedAt,
+                n.SourceName,
+                n.UserId)
+            ).ToList();
+
+
+        var userDto = new UserDto(
+            user.Id,
+            user.Email,
+            user.Role,
+            newsDto
+        );
+        
+        return ResultViewModel<UserDto?>.Success(userDto);
     }
     #endregion
 

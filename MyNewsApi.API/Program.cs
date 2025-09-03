@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MyNewsApi.Application;
 using MyNewsApi.Application.Interfaces;
 using MyNewsApi.Application.Services;
+using MyNewsApi.Infra;
 using MyNewsApi.Infra.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("NewsDb")));
 
-builder.Services.AddScoped<NewsService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services
+    .AddAplication()
+    .AddInfra(builder.Configuration);
 
 var jwtSection = builder.Configuration.GetSection("Jwt");
 var key = jwtSection["Key"];
