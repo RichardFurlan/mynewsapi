@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using MyNewsApi.Application.DTOs;
 using MyNewsApi.Application.Interfaces;
 using MyNewsApi.Domain.Entities;
+using MyNewsApi.Infra.Clients;
 using MyNewsApi.Infra.Data;
 using NewsAPI;
 using NewsAPI.Constants;
@@ -14,16 +15,23 @@ namespace MyNewsApi.Application.Services;
 
 public class NewsService : INewsService
 {
-    private readonly NewsApiClient _client;
+    private readonly INewsApiClient _client;
     private readonly AppDbContext _db;
     private readonly ILogger<NewsService> _logger;
 
-    public NewsService(IConfiguration config, AppDbContext db, ILogger<NewsService> logger)
+    public NewsService(IConfiguration config, AppDbContext db, ILogger<NewsService> logger, INewsApiClient? client = null)
     {
         _db = db;
         _logger = logger;
-        var apiKey = config["NewsApi:ApiKey"];
-        _client = new NewsApiClient(apiKey);
+        if (client != null)
+        {
+            _client = client;
+        }
+        else
+        {
+            var apiKey = config["NewsApi:ApiKey"];
+            if (apiKey != null) _client = new NewsApiClientWrapper(apiKey);
+        }
     }
 
 
